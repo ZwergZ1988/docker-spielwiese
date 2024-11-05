@@ -1,10 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const mongoose = require("mongoose");
 
 const port = process.env.REACT_APP_PORT;
 
 const mongo_url = process.env.REACT_APP_MONGODB_URL;
+mongoose.connect(mongo_url);
+
+const Message = mongoose.model("Message", { message: String });
 
 const app = express();
 app.use(cors());
@@ -17,18 +21,20 @@ app.get("/api/hello", (req, res) => {
 });
 
 app.get("/api/messages", (req, res) => {
-  res.json({
-    messages: ["Hello from the backend!", "Hello again from the backend!"],
+  Message.find().then((messages) => {
+    res.json({ messages });
   });
 });
 
 app.post("/api/message", (req, res) => {
   const body = req.body;
 
-  console.log(body);
+  const new_message = new Message({ message: body.message });
 
-  res.json({
-    status: "OK",
+  new_message.save().then(() => {
+    res.json({
+      status: "OK",
+    });
   });
 });
 

@@ -33,9 +33,10 @@ function App() {
         </button>
         <button
           onClick={() =>
-            helloService
-              .executeGetDBMessagesService()
-              .then((data) => alert(data.messages[0]))
+            helloService.executeGetDBMessagesService().then((data) => {
+              console.log(data.messages);
+              alert(data.messages.length + " messages found");
+            })
           }
         >
           Messages
