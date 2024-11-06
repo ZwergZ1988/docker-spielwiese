@@ -5,9 +5,12 @@ services:
   mongo:
     image: mongo:4.4.18
     restart: always
+    volumes:
+      - ./db:/data/db
+      - ./configdb:/data/configdb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
 
   mongo-express:
     image: mongo-express
