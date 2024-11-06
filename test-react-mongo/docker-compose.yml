@@ -26,6 +26,7 @@ services:
       - ME_CONFIG_BASICAUTH=false
 
   test-react-app:
+    image: lieder/react-app:rc1
     build: ./test-react-backend
     ports:
       - 3030:3030
@@ -35,3 +36,13 @@ services:
       - REACT_APP_PORT=3030
       - REACT_APP_MONGODB_URL=mongodb://root:example@mongo:27017/test-react-mongo
       - VITE_REACT_APP_API_URL=http://localhost:3030/api
+
+  test-react-app-worker:
+    image: lieder/react-app:rc1
+    depends_on:
+      - test-react-app
+    environment:
+      - REACT_APP_PORT=3030
+      - REACT_APP_MONGODB_URL=mongodb://root:example@mongo:27017/test-react-mongo
+      - VITE_REACT_APP_API_URL=http://localhost:3030/api
+    command: ["node", "worker.js"]

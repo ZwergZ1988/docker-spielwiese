@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "service": "node index.js",
+    "worker": "node worker.js"
   },
   "author": "",
   "license": "ISC",
